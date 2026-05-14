@@ -1,0 +1,33 @@
+{
+  "trained_at": "2026-05-13T21:38:01.727957",
+  "train_end_year": 2020,
+  "test_start_year": 2021,
+  "models": {
+    "magnitude_xgb": {
+      "algorithm": "XGBoostRegressor",
+      "feature_set": "baseline_parsimonioso",
+      "n_features": 10,
+      "test_mae_pp": 9.628497434840252,
+      "test_r2": 0.010897742890265572
+    },
+    "detector_trigger_hgb": {
+      "algorithm": "HistGradientBoostingRegressor",
+      "feature_set": "set_A_interacc",
+      "n_features": 18,
+      "test_mae_pp": 14.320989438447913,
+      "recall_detector": 0.4,
+      "recall_trigger": 0.0,
+      "basis_risk_pp": 18.408955115073674,
+      "detector_threshold_pct": -2.8,
+      "trigger_threshold_pct": -14.0
+    },
+    "monthly_hgb": {
+      "algorithm": "HistGradientBoostingRegressor",
+      "feature_set": "mensual_core_lags",
+      "n_features": 50,
+      "test_mae_annualized_pp": 11.080675700495611,
+      "test_r2": -0.018116917424092494
+    }
+  },
+  "elapsed_seconds": 2.9
+}
