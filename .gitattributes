@@ -1,0 +1,3 @@
+* text=auto
+*.pkl binary
+*.joblib binary
