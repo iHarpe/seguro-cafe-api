@@ -1,59 +1,70 @@
 # seguro-cafe-api
 
-API REST para el modelo de seguro agrícola indexado en el sector cafetero colombiano.
+REST API for parametric coffee crop insurance risk scoring (Colombia — Risaralda & Cundinamarca).
 
-## Estructura
+## Requirements
 
-```
-seguro-cafe-api/
-  insumos/
-    models/    ← artifacts .pkl (commiteados, requeridos para correr la API)
-    data/      ← datasets CSV (en .gitignore; solo necesarios para re-entrenar)
-  src/
-  scripts/
-```
+- Python 3.11+
+- Dependencies: `pip install -r requirements.txt`
 
-## Setup
+## Quickstart
 
 ```bash
-cp .env.example .env   # las rutas por defecto ya apuntan a insumos/
+cp .env.example .env
 pip install -r requirements.txt
-```
-
-## Entrenar / re-entrenar modelos (opcional)
-
-Solo necesario si se quieren actualizar los artifacts. Los datos deben estar en `insumos/data/`.
-
-```bash
-python scripts/run_pipeline.py
-```
-
-Guarda los artifacts en `insumos/models/`.
-
-## Correr la API
-
-```bash
 uvicorn src.api.main:app --reload --port 8000
 ```
 
-Docs interactivas: http://localhost:8000/docs
+Interactive docs: http://localhost:8000/docs
+
+## Environment variables (`.env`)
+
+| Variable | Default | Description |
+|---|---|---|
+| `MODELS_DIR` | `./insumos/models` | Path to trained model artifacts |
+| `DATA_ANNUAL` | `./insumos/data/dataset_modelado_anual_limpio.csv` | Annual dataset (for training only) |
+| `DATA_MONTHLY` | `./insumos/data/dataset_operativo_mensual_limpio.csv` | Monthly dataset (for training only) |
+| `API_KEY` | — | Required header value for prediction endpoints |
 
 ## Endpoints
 
-| Método | Ruta | Auth | Descripción |
+| Method | Path | Auth | Description |
 |---|---|---|---|
-| GET | `/health` | No | Estado de la API |
-| POST | `/predict/annual` | API Key | Magnitud + detector + trigger |
-| POST | `/predict/monthly` | API Key | Score mensual + alerta |
-| GET | `/data/history/{dept}` | No | Serie histórica del departamento |
-| GET | `/calibrate/trigger` | No | Tabla basis risk por umbral |
+| `GET` | `/health` | No | API status and model metadata |
+| `POST` | `/predict/annual` | `X-API-Key` | Annual loss magnitude + event detection + trigger |
+| `POST` | `/predict/monthly` | `X-API-Key` | Monthly harvest scores + annualized alert |
+| `GET` | `/data/history/{departamento}` | No | Historical series 2007–2024 |
+| `GET` | `/calibrate/trigger` | No | Basis risk table across trigger thresholds |
 
-Autenticación: header `X-API-Key: <valor de API_KEY en .env>`
+`departamento` accepts `Cundinamarca` or `Risaralda`.
 
-## Modelos
+## Models
 
-| Modelo | Algoritmo | Feature set | Métrica test |
+| Name | Algorithm | Features | Test metric |
 |---|---|---|---|
-| Magnitud | XGBoostRegressor | baseline_parsimonioso (10 vars) | MAE 9.63 pp |
-| Detector+Trigger | HGB | set_A_interacc (18 vars) | umbral -2.8% / -14.0% |
-| Mensual | HGB | mensual_core_lags | MAE anualizado ~11 pp |
+| `magnitude_xgb` | XGBoostRegressor | `baseline_parsimonioso` — 10 vars | MAE 9.63 pp |
+| `detector_trigger_hgb` | HistGradientBoostingRegressor | `set_A_interacc` — 18 vars | detector threshold −2.8% / trigger −14.0% |
+| `monthly_hgb` | HistGradientBoostingRegressor | `mensual_core_lags` — ~50 vars | MAE annualized 11.08 pp |
+
+Pre-trained artifacts are in `insumos/models/`. To retrain:
+
+```bash
+# Datasets must be present in insumos/data/
+python scripts/run_pipeline.py
+```
+
+## Project layout
+
+```
+src/
+  features/definitions.py   # feature constants and transformation functions
+  models/train.py            # training pipeline
+  models/predictor.py        # CafeteroPredictor class
+  api/schemas.py             # Pydantic request/response models
+  api/main.py                # FastAPI application
+scripts/
+  run_pipeline.py            # train + validate + save artifacts
+insumos/
+  models/                    # trained .pkl files (committed)
+  data/                      # CSV datasets (.gitignore — training only)
+```
