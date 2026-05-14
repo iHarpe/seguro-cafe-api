@@ -1,13 +1,13 @@
 # seguro-cafe-api
 
-REST API for parametric coffee crop insurance risk scoring (Colombia — Risaralda & Cundinamarca).
+API REST para la estimación de riesgo en seguros paramétricos de café (Colombia — Risaralda y Cundinamarca).
 
-## Requirements
+## Requisitos
 
 - Python 3.11+
-- Dependencies: `pip install -r requirements.txt`
+- `pip install -r requirements.txt`
 
-## Quickstart
+## Inicio rápido
 
 ```bash
 cp .env.example .env
@@ -15,56 +15,56 @@ pip install -r requirements.txt
 uvicorn src.api.main:app --reload --port 8000
 ```
 
-Interactive docs: http://localhost:8000/docs
+Documentación interactiva: http://localhost:8000/docs
 
-## Environment variables (`.env`)
+## Variables de entorno (`.env`)
 
-| Variable | Default | Description |
+| Variable | Por defecto | Descripción |
 |---|---|---|
-| `MODELS_DIR` | `./insumos/models` | Path to trained model artifacts |
-| `DATA_ANNUAL` | `./insumos/data/dataset_modelado_anual_limpio.csv` | Annual dataset (for training only) |
-| `DATA_MONTHLY` | `./insumos/data/dataset_operativo_mensual_limpio.csv` | Monthly dataset (for training only) |
-| `API_KEY` | — | Required header value for prediction endpoints |
+| `MODELS_DIR` | `./insumos/models` | Ruta a los artifacts entrenados |
+| `DATA_ANNUAL` | `./insumos/data/dataset_modelado_anual_limpio.csv` | Dataset anual (solo para entrenamiento) |
+| `DATA_MONTHLY` | `./insumos/data/dataset_operativo_mensual_limpio.csv` | Dataset mensual (solo para entrenamiento) |
+| `API_KEY` | — | Valor requerido en el header de los endpoints de predicción |
 
 ## Endpoints
 
-| Method | Path | Auth | Description |
+| Método | Ruta | Auth | Descripción |
 |---|---|---|---|
-| `GET` | `/health` | No | API status and model metadata |
-| `POST` | `/predict/annual` | `X-API-Key` | Annual loss magnitude + event detection + trigger |
-| `POST` | `/predict/monthly` | `X-API-Key` | Monthly harvest scores + annualized alert |
-| `GET` | `/data/history/{departamento}` | No | Historical series 2007–2024 |
-| `GET` | `/calibrate/trigger` | No | Basis risk table across trigger thresholds |
+| `GET` | `/health` | No | Estado de la API y metadatos de los modelos |
+| `POST` | `/predict/annual` | `X-API-Key` | Magnitud de pérdida anual + detección de evento + trigger |
+| `POST` | `/predict/monthly` | `X-API-Key` | Scores mensuales de cosecha + alerta anualizada |
+| `GET` | `/data/history/{departamento}` | No | Serie histórica 2007–2024 |
+| `GET` | `/calibrate/trigger` | No | Tabla de basis risk por umbral de trigger |
 
-`departamento` accepts `Cundinamarca` or `Risaralda`.
+`departamento` acepta `Cundinamarca` o `Risaralda`.
 
-## Models
+## Modelos
 
-| Name | Algorithm | Features | Test metric |
+| Nombre | Algoritmo | Features | Métrica test |
 |---|---|---|---|
 | `magnitude_xgb` | XGBoostRegressor | `baseline_parsimonioso` — 10 vars | MAE 9.63 pp |
-| `detector_trigger_hgb` | HistGradientBoostingRegressor | `set_A_interacc` — 18 vars | detector threshold −2.8% / trigger −14.0% |
-| `monthly_hgb` | HistGradientBoostingRegressor | `mensual_core_lags` — ~50 vars | MAE annualized 11.08 pp |
+| `detector_trigger_hgb` | HistGradientBoostingRegressor | `set_A_interacc` — 18 vars | umbral detector −2.8% / trigger −14.0% |
+| `monthly_hgb` | HistGradientBoostingRegressor | `mensual_core_lags` — ~50 vars | MAE anualizado 11.08 pp |
 
-Pre-trained artifacts are in `insumos/models/`. To retrain:
+Los artifacts pre-entrenados están en `insumos/models/`. Para re-entrenar:
 
 ```bash
-# Datasets must be present in insumos/data/
+# Los datasets deben estar en insumos/data/
 python scripts/run_pipeline.py
 ```
 
-## Project layout
+## Estructura del proyecto
 
 ```
 src/
-  features/definitions.py   # feature constants and transformation functions
-  models/train.py            # training pipeline
-  models/predictor.py        # CafeteroPredictor class
-  api/schemas.py             # Pydantic request/response models
-  api/main.py                # FastAPI application
+  features/definitions.py   # constantes de features y funciones de transformación
+  models/train.py            # pipeline de entrenamiento
+  models/predictor.py        # clase CafeteroPredictor
+  api/schemas.py             # modelos Pydantic de request/response
+  api/main.py                # aplicación FastAPI
 scripts/
-  run_pipeline.py            # train + validate + save artifacts
+  run_pipeline.py            # entrena, valida y guarda artifacts
 insumos/
-  models/                    # trained .pkl files (committed)
-  data/                      # CSV datasets (.gitignore — training only)
+  models/                    # archivos .pkl entrenados (commiteados)
+  data/                      # datasets CSV (.gitignore — solo para entrenamiento)
 ```
