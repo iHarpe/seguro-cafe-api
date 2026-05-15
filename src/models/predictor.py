@@ -72,7 +72,7 @@ class CafeteroPredictor:
         else:
             nivel_alerta = "ALERTA"
 
-        basis_risk = abs(perdida_estimada - TRIGGER_THRESHOLD)
+        basis_risk = None  # requires actual loss — see /data/backtest
 
         meta_models = self._metadata.get("models", {})
         return {
@@ -82,7 +82,7 @@ class CafeteroPredictor:
             "evento_detectado": evento_detectado,
             "trigger_activado": trigger_activado,
             "nivel_alerta": nivel_alerta,
-            "basis_risk_estimado_pp": round(basis_risk, 4),
+            "basis_risk_estimado_pp": None,
             "modelo_magnitud": meta_models.get("magnitude_xgb", {}).get("algorithm", "XGBoostRegressor"),
             "modelo_detector_trigger": meta_models.get("detector_trigger_hgb", {}).get("algorithm", "HistGradientBoostingRegressor"),
             "umbral_detector_pct": DETECTOR_THRESHOLD,

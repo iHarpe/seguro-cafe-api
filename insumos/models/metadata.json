@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-05-13T21:38:01.727957",
+  "trained_at": "2026-05-15T14:50:24.705956",
   "train_end_year": 2020,
   "test_start_year": 2021,
   "models": {
@@ -29,5 +29,5 @@
       "test_r2": -0.018116917424092494
     }
   },
-  "elapsed_seconds": 2.9
+  "elapsed_seconds": 2.8
 }

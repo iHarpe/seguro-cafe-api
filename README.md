@@ -12,7 +12,7 @@ API REST para la estimación de riesgo en seguros paramétricos de café (Colomb
 ```bash
 cp .env.example .env
 pip install -r requirements.txt
-uvicorn src.api.main:app --reload --port 8000
+python -m uvicorn src.api.main:app --port 8000 --host 127.0.0.1
 ```
 
 Documentación interactiva: http://localhost:8000/docs

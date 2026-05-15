@@ -35,7 +35,7 @@ class AnnualPredictionOutput(BaseModel):
     evento_detectado: bool
     trigger_activado: bool
     nivel_alerta: str
-    basis_risk_estimado_pp: float
+    basis_risk_estimado_pp: Optional[float] = None
     modelo_magnitud: str
     modelo_detector_trigger: str
     umbral_detector_pct: float
@@ -91,3 +91,6 @@ class HealthResponse(BaseModel):
     models_loaded: bool
     trained_at: Optional[str] = None
     train_end_year: Optional[int] = None
+    metrics: Optional[dict] = None
+    pipeline_last_run: Optional[str] = None
+    data_freshness_days: Optional[int] = None
