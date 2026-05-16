@@ -1,0 +1,128 @@
+[
+  {
+    "variable": "temp_aire_C_annual_mean",
+    "label": "Temperatura media anual (°C)",
+    "pearson_r": 0.3315,
+    "p_value": 0.0483,
+    "significant": true
+  },
+  {
+    "variable": "temp_x_def_annual",
+    "label": "Interacción: Temp × Déficit hídrico",
+    "pearson_r": 0.317,
+    "p_value": 0.0596,
+    "significant": false
+  },
+  {
+    "variable": "def_annual_mean",
+    "label": "Déficit hídrico anual medio (mm)",
+    "pearson_r": 0.3081,
+    "p_value": 0.0675,
+    "significant": false
+  },
+  {
+    "variable": "stress_hidrico",
+    "label": "Índice estrés hídrico",
+    "pearson_r": 0.27,
+    "p_value": 0.1113,
+    "significant": false
+  },
+  {
+    "variable": "temp_aire_C_cosecha_mean",
+    "label": "Temperatura media cosecha (°C)",
+    "pearson_r": 0.2374,
+    "p_value": 0.1632,
+    "significant": false
+  },
+  {
+    "variable": "NDVI_anomalia_pct_cosecha_mean",
+    "label": "Anomalía NDVI cosecha (%)",
+    "pearson_r": -0.2002,
+    "p_value": 0.2417,
+    "significant": false
+  },
+  {
+    "variable": "gpp_ndvi_ratio_cosecha",
+    "label": "Ratio GPP/NDVI cosecha",
+    "pearson_r": 0.188,
+    "p_value": 0.2721,
+    "significant": false
+  },
+  {
+    "variable": "Gpp_anomalia_pct_annual_mean",
+    "label": "Anomalía GPP anual (%)",
+    "pearson_r": 0.1179,
+    "p_value": 0.4933,
+    "significant": false
+  },
+  {
+    "variable": "precio_ico_usd_ton",
+    "label": "Precio ICO (USD/ton)",
+    "pearson_r": -0.1122,
+    "p_value": 0.5147,
+    "significant": false
+  },
+  {
+    "variable": "GDD_x_gpp_anom",
+    "label": "Interacción: GDD × Anomalía GPP",
+    "pearson_r": 0.109,
+    "p_value": 0.527,
+    "significant": false
+  },
+  {
+    "variable": "NDVI_anomalia_pct_annual_mean",
+    "label": "Anomalía NDVI anual (%)",
+    "pearson_r": 0.1052,
+    "p_value": 0.5416,
+    "significant": false
+  },
+  {
+    "variable": "balance_hidrico",
+    "label": "Balance hídrico cosecha (AET−PET)",
+    "pearson_r": -0.0968,
+    "p_value": 0.5745,
+    "significant": false
+  },
+  {
+    "variable": "GDD_cafe_annual_mean",
+    "label": "Grados día café (anual)",
+    "pearson_r": 0.0858,
+    "p_value": 0.6187,
+    "significant": false
+  },
+  {
+    "variable": "precipitation_cosecha_sum",
+    "label": "Precipitación cosecha total (mm)",
+    "pearson_r": 0.0598,
+    "p_value": 0.7292,
+    "significant": false
+  },
+  {
+    "variable": "precip_x_ndvi_anom",
+    "label": "Interacción: Precip × Anomalía NDVI",
+    "pearson_r": 0.0547,
+    "p_value": 0.7513,
+    "significant": false
+  },
+  {
+    "variable": "amplitud_termica_cosecha",
+    "label": "Amplitud térmica cosecha (°C)",
+    "pearson_r": 0.0336,
+    "p_value": 0.8456,
+    "significant": false
+  },
+  {
+    "variable": "precipitation_annual_sum",
+    "label": "Precipitación anual total (mm)",
+    "pearson_r": -0.0093,
+    "p_value": 0.9569,
+    "significant": false
+  },
+  {
+    "variable": "es_risaralda",
+    "label": "Departamento (Risaralda=1)",
+    "pearson_r": -0.0,
+    "p_value": 1.0,
+    "significant": false
+  }
+]

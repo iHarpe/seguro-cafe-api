@@ -8,7 +8,3 @@ dist/
 build/
 *.stackdump
 
-# Los datasets de entrenamiento son grandes; no se commitean.
-# Los modelos entrenados SÍ se commitean (son el artefacto principal del repo).
-insumos/data/*
-!insumos/data/.gitkeep
